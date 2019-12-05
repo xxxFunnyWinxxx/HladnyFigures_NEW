@@ -8,7 +8,7 @@ time_step = None
 
 window_width = 800
 
-window_height = 800
+window_height = 650
 
 def frap_method():
     print('1')
@@ -20,22 +20,21 @@ def animation_method():
 def main():
     global physical_time
     global displayed_time
-    global speed_of_sound
     global frequency
-    global height
-    global width
-    global plate
+    global speed_of
+    global space
+    global start_button
 
     print('Modelling started!')
     physical_time = 0
 
-    root = tkinter.Tk()
+    root = tkinter.Tk() #Zadaet pole
 
     plate = tkinter.Canvas(root, width=window_width, height=window_height, bg="white")
-    plate.pack(side=tkinter.LEFT)
+    plate.pack(side=tkinter.BOTTOM)
 
     frame = tkinter.Frame(root)
-    frame.pack(side=tkinter.RIGHT)
+    frame.pack(side=tkinter.LEFT)
 
     speed_of_sound_label = Label(text = 'Скорость звука, м/с')
     speed_of_sound_label.pack()
@@ -58,15 +57,15 @@ def main():
 
     height = tkinter.DoubleVar()
     height.set(0.3)
-    height_entry = tkinter.Entry(frame, textvariable=height)
+    height_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
     height_entry.pack()
 
-    width_label = Label(text='Ширина, м')
-    width_label.pack()
+    height_label = Label(text='Ширина, м')
+    height_label.pack()
 
     width = tkinter.DoubleVar()
     width.set(0.3)
-    width_entry = tkinter.Entry(frame, textvariable=width)
+    width_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
     width_entry.pack()
 
     frap_method_button = tkinter.Button(frame, text="Кадр", command=frap_method)
