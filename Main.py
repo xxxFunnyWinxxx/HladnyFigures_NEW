@@ -31,7 +31,7 @@ def main():
     root = tkinter.Tk() #Zadaet pole
 
     plate = tkinter.Canvas(root, width=window_width, height=window_height, bg="white")
-    plate.pack(side=tkinter.BOTTOM)
+    plate.pack(side=tkinter.LEFT)
 
     frame = tkinter.Frame(root)
     frame.pack(side=tkinter.LEFT)
@@ -41,7 +41,7 @@ def main():
 
     speed_of_sound = tkinter.DoubleVar()
     speed_of_sound.set(1000)
-    speed_of_sound_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    speed_of_sound_entry = tkinter.Entry(textvariable=speed_of_sound)
     speed_of_sound_entry.pack()
 
     frequency_label = Label(text='Частота, Гц')
@@ -49,7 +49,7 @@ def main():
 
     frequency = tkinter.DoubleVar()
     frequency.set(1000)
-    frequency = tkinter.Entry(frame, textvariable=frequency)
+    frequency = tkinter.Entry(textvariable=frequency)
     frequency.pack()
 
     height_label = Label(text='Высота, м')
@@ -57,7 +57,7 @@ def main():
 
     height = tkinter.DoubleVar()
     height.set(0.3)
-    height_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    height_entry = tkinter.Entry(textvariable=speed_of_sound)
     height_entry.pack()
 
     height_label = Label(text='Ширина, м')
@@ -65,14 +65,14 @@ def main():
 
     width = tkinter.DoubleVar()
     width.set(0.3)
-    width_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    width_entry = tkinter.Entry(textvariable=speed_of_sound)
     width_entry.pack()
 
-    frap_method_button = tkinter.Button(frame, text="Кадр", command=frap_method)
+    frap_method_button = tkinter.Button(text="Кадр", command=frap_method)
     frap_method_button.pack()
-    figure_method_button = tkinter.Button(frame, text="Фигура", command=figure_method)
+    figure_method_button = tkinter.Button(text="Фигура", command=figure_method)
     figure_method_button.pack()
-    animation_method_button = tkinter.Button(frame, text="Анимация", command=animation_method)
+    animation_method_button = tkinter.Button(text="Анимация", command=animation_method)
     animation_method_button.pack()
 
     root.mainloop()
