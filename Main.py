@@ -1,24 +1,14 @@
-# coding: utf-8
-# license: GPLv3
-
 import tkinter
 from tkinter.filedialog import *
-from Screen import *
-
-perform_execution = False
-"""Флаг цикличности выполнения расчёта"""
+#from Screen_calc import *
 
 physical_time = 0
-"""Физическое время от начала расчёта.
-Тип: float"""
-
-displayed_time = None
-"""Отображаемое на экране время.
-Тип: переменная tkinter"""
 
 time_step = None
-"""Шаг по времени при моделировании.
-Тип: float"""
+
+window_width = 800
+
+window_height = 800
 
 def frap_method():
     print('1')
@@ -28,9 +18,6 @@ def animation_method():
     print('3')
 
 def main():
-    """Главная функция главного модуля.
-    Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
-    """
     global physical_time
     global displayed_time
     global time_step
@@ -49,13 +36,21 @@ def main():
     frame = tkinter.Frame(root)
     frame.pack(side=tkinter.RIGHT)
 
-    speed_of_sound_label = Label(text = 'Скорость звука')
+    speed_of_sound_label = Label(text = 'Скорость звука, м/с')
     speed_of_sound_label.pack()
 
     speed_of_sound = tkinter.DoubleVar()
     speed_of_sound.set(1000)
     speed_of_sound_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
     speed_of_sound_entry.pack()
+
+    frequency_label = Label(text='Частота, Гц')
+    frequency_label.pack()
+
+    frequency = tkinter.DoubleVar()
+    frequency.set(1000)
+    frequency = tkinter.Entry(frame, textvariable=frequency)
+    frequency.pack()
 
     height_label = Label(text='Высота, м')
     height_label.pack()
