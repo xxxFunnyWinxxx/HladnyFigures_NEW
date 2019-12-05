@@ -20,10 +20,11 @@ def animation_method():
 def main():
     global physical_time
     global displayed_time
-    global time_step
-    global time_speed
-    global space
-    global start_button
+    global speed_of_sound
+    global frequency
+    global height
+    global width
+    global plate
 
     print('Modelling started!')
     physical_time = 0
@@ -57,15 +58,15 @@ def main():
 
     height = tkinter.DoubleVar()
     height.set(0.3)
-    height_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    height_entry = tkinter.Entry(frame, textvariable=height)
     height_entry.pack()
 
-    height_label = Label(text='Ширина, м')
-    height_label.pack()
+    width_label = Label(text='Ширина, м')
+    width_label.pack()
 
     width = tkinter.DoubleVar()
     width.set(0.3)
-    width_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    width_entry = tkinter.Entry(frame, textvariable=width)
     width_entry.pack()
 
     frap_method_button = tkinter.Button(frame, text="Кадр", command=frap_method)
