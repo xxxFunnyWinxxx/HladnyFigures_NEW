@@ -3,32 +3,36 @@ import scipy.sparse.linalg as lg
 import numpy as np
 import tkinter as tk
 
-
 # Указание и вычисление констант
+def constant(speed_of_sound, height, width, frequency):
+    global all_time, dt, freq
+    global amplitude, len, hei, vec_lenght
+    global x_center, y_center
+    global A, B, C, D
 
-all_time = 1    # Время процесса
-dt = 0.000001   # Шаг по времени
+    all_time = 0.01    # Время процесса
+    dt = 0.000001   # Шаг по времени
 
-quan = 100      # Число симулируемых плиток вдоль оси
+    freq = frequency
 
-amplitude = 0.005   # Амплитуда колебаний центральных плит
+    quan = 100      # Число симулируемых плиток вдоль оси
 
-h = min(width, height)/quan
+    amplitude = 0.005   # Амплитуда колебаний центральных плит
 
-len = int(width/h)
-hei = int(height/h)
+    h = min(width, height)/quan
 
-x_center = [int(quan/2),int(quan/2+1)]
-y_center = [int(quan/2),int(quan/2+1)]
+    len = int(width/h)
+    hei = int(height/h)
 
-vec_lenght = (len+2)*(hei+2)
+    x_center = [int(quan/2),int(quan/2+1)]
+    y_center = [int(quan/2),int(quan/2+1)]
 
-kappa = speed_of_sound*speed_of_sound
-
-A = 2-4*kappa*dt*dt/(h*h)
-B = kappa*dt*dt/(h*h)
-C = -1
-D = 1
+    vec_lenght = (len+2)*(hei+2)
+    kappa = speed_of_sound * speed_of_sound
+    A = 2-4*kappa*dt*dt/(h*h)
+    B = kappa*dt*dt/(h*h)
+    C = -1
+    D = 1
 
 # Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
 def vec_coords(x,y):
@@ -49,9 +53,10 @@ def coords_vector_init():
     return Vector
 
 # Шаг процесса
-def main_calculation(Vector, Matrix):
+def main_calculation():
     time = 0
-
+    Matrix = factor_matrix_init()
+    Vector = coords_vector_init()
     M = lg.aslinearoperator(Matrix)
     # Ход времени
     for i in range(int(all_time/dt)):
@@ -73,13 +78,8 @@ def main_calculation(Vector, Matrix):
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
     return Vector
 
-def make_image(Vector):
-    root = tk.Tk()
-    root.geometry(str(2*len) + 'x' + str(2*hei))
-    root.title("Симуляция")
-    canv = tk.Canvas(root, width= 2*len, height= 2*hei, bg='white')
-    canv.pack()
-    amplitude = 0.005
+def make_image(canv):
+    Vector = main_calculation()
 
     def rgb(rgb):
         return "#%02x%02x%02x" % rgb
@@ -96,11 +96,5 @@ def make_image(Vector):
             i = 2*(n // (len+2) +1)
             j = 2*(n % (len+2) +1)
             canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
-    print('end')
     create_board_image(canv, Vector, vec_lenght)
-    root.mainloop()
 
-Matrix = factor_matrix_init()
-Vector = coords_vector_init()
-Vector = main_calculation(Vector, Matrix)
-make_image(Vector)
