@@ -42,7 +42,7 @@ def main():
 
     speed_of_sound = tkinter.DoubleVar()
     speed_of_sound.set(1000)
-    speed_of_sound_entry = tkinter.Entry(frame, textvariable=speed_of_sound)
+    speed_of_sound_entry = tkinter.Entry(textvariable=speed_of_sound)
     speed_of_sound_entry.pack()
 
     frequency_label = Label(text='Частота, Гц')
@@ -50,7 +50,7 @@ def main():
 
     frequency = tkinter.DoubleVar()
     frequency.set(1000)
-    frequency = tkinter.Entry(frame, textvariable=frequency)
+    frequency = tkinter.Entry(textvariable=frequency)
     frequency.pack()
 
     height_label = Label(text='Высота, м')
@@ -58,7 +58,7 @@ def main():
 
     height = tkinter.DoubleVar()
     height.set(0.3)
-    height_entry = tkinter.Entry(frame, textvariable=height)
+    height_entry = tkinter.Entry(textvariable=height)
     height_entry.pack()
 
     width_label = Label(text='Ширина, м')
@@ -66,14 +66,14 @@ def main():
 
     width = tkinter.DoubleVar()
     width.set(0.3)
-    width_entry = tkinter.Entry(frame, textvariable=width)
+    width_entry = tkinter.Entry(textvariable=width)
     width_entry.pack()
 
-    frap_method_button = tkinter.Button(frame, text="Кадр", command=frap_method)
+    frap_method_button = tkinter.Button(text="Кадр", command=frap_method)
     frap_method_button.pack()
-    figure_method_button = tkinter.Button(frame, text="Фигура", command=figure_method)
+    figure_method_button = tkinter.Button(text="Фигура", command=figure_method)
     figure_method_button.pack()
-    animation_method_button = tkinter.Button(frame, text="Анимация", command=animation_method)
+    animation_method_button = tkinter.Button(text="Анимация", command=animation_method)
     animation_method_button.pack()
 
     root.mainloop()
