@@ -112,8 +112,8 @@ def color_calculation(h):
 
 def mode_1(canv, Vector):
     for n in range(vec_lenght):
-        i = 2*(n // (len+2) +1)
-        j = 2*(n % (len+2) +1)
+        j = 2*(n // (len+2) +1)
+        i = 2*(n % (len+2) +1)
         canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
 
 def mode_3():
