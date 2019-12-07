@@ -12,7 +12,7 @@ def frap_method():
 
 # mode = 2
 def figure_method():
-    print('2')
+    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 2, plate)
 
 # mode = 3
 def animation_method():

@@ -11,12 +11,12 @@ def constant_init(speed_of_sound, height, width, frequency):
     global x_center, y_center
     global A, B, C, D
 
-    all_time = 0.001    # Время процесса
+    all_time = 0.01    # Время процесса
     dt = 0.000001   # Шаг по времени
 
     freq = frequency
 
-    quan = 100      # Число симулируемых плиток вдоль оси
+    quan = 200      # Число симулируемых плиток вдоль оси
 
     amplitude = 0.005   # Амплитуда колебаний центральных плит
 
@@ -57,12 +57,12 @@ def coords_vector_init():
 def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
     constant_init(speed_of_sound, height, width, frequency)
     time = 0
-    if mode == 2:
+    #if mode == 2:
         ########
-    elif mode == 3:
-        frames = []
-        image1 = PIL.Image.new("RGB", (2 * len, 2 * hei), (255, 255, 255))
-        draw = ImageDraw.Draw(image1)
+    #if mode == 3:
+    image1 = PIL.Image.new("RGB", (2 * len, 2 * hei), (255, 255, 255))
+    draw = ImageDraw.Draw(image1)
+
     Matrix = factor_matrix_init()
     Vector = coords_vector_init()
     M = lg.aslinearoperator(Matrix)
@@ -85,21 +85,20 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
             Vector[vec_coords(i, 0)] = Vector[vec_coords(i, 1)]
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
 
-        if mode == 2:
+        #if mode == 2:
             #####
-        elif mode == 3 and m % 10 == 0:
+        if mode == 3 and m % 10 == 0:
             for n in range(vec_lenght):
                 j = 2 * (n // (len + 2) + 1)
                 i = 2 * (n % (len + 2) + 1)
                 draw.rectangle([i, j, i + 1, j + 1], outline=color_calculation(float(Vector[n])))
-            frames.append(image1)
+            image1.save('plt/'+str(int(m/10))+'.png')
     if mode == 1:
         mode_1(canv, Vector)
-    if mode == 2:
+    #if mode == 2:
         #######
     if mode == 3:
-        mode_3(frames)
-
+        mode_3()
 
 def rgb(rgb):
     return "#%02x%02x%02x" % rgb
@@ -117,8 +116,16 @@ def mode_1(canv, Vector):
         j = 2*(n % (len+2) +1)
         canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
 
-def mode_3(frames):
-    frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:len(frames)], save_all=True, duration=50, Loop=0)
+def mode_3():
+    def roll():
+        frames = []
+        for i in range(int(all_time/(dt*10))):
+            new_frame = Image.open('plt/' + str(i) + '.png')
+            frames.append(new_frame)
+            print('Number of frame:' + str(i))
+        return frames
+    frames = roll()
+    frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:int(all_time/(dt*10))], save_all=True, duration=50, Loop=0)
 
 
 
