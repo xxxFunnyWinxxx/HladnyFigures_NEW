@@ -1,7 +1,6 @@
 import scipy.sparse as sp
 import scipy.sparse.linalg as lg
 import numpy as np
-import tkinter as tk
 from PIL import Image, ImageDraw
 import PIL
 
@@ -12,7 +11,7 @@ def constant_init(speed_of_sound, height, width, frequency):
     global x_center, y_center
     global A, B, C, D
 
-    all_time = 0.01    # Время процесса
+    all_time = 0.001    # Время процесса
     dt = 0.000001   # Шаг по времени
 
     freq = frequency
@@ -58,9 +57,12 @@ def coords_vector_init():
 def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
     constant_init(speed_of_sound, height, width, frequency)
     time = 0
-    frames = []
-    image1 = PIL.Image.new("RGB", (2 * len, 2 * hei), (255, 255, 255))
-    draw = ImageDraw.Draw(image1)
+    if mode == 2:
+        ########
+    elif mode == 3:
+        frames = []
+        image1 = PIL.Image.new("RGB", (2 * len, 2 * hei), (255, 255, 255))
+        draw = ImageDraw.Draw(image1)
     Matrix = factor_matrix_init()
     Vector = coords_vector_init()
     M = lg.aslinearoperator(Matrix)
@@ -83,7 +85,9 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
             Vector[vec_coords(i, 0)] = Vector[vec_coords(i, 1)]
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
 
-        if mode == 3 and m % 10 == 0:
+        if mode == 2:
+            #####
+        elif mode == 3 and m % 10 == 0:
             for n in range(vec_lenght):
                 j = 2 * (n // (len + 2) + 1)
                 i = 2 * (n % (len + 2) + 1)
@@ -91,8 +95,11 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
             frames.append(image1)
     if mode == 1:
         mode_1(canv, Vector)
+    if mode == 2:
+        #######
     if mode == 3:
-        frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:len(frames)], save_all=True, duration=50, Loop=0)
+        mode_3(frames)
+
 
 def rgb(rgb):
     return "#%02x%02x%02x" % rgb
@@ -109,6 +116,9 @@ def mode_1(canv, Vector):
         i = 2*(n // (len+2) +1)
         j = 2*(n % (len+2) +1)
         canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
+
+def mode_3(frames):
+    frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:len(frames)], save_all=True, duration=50, Loop=0)
 
 
 

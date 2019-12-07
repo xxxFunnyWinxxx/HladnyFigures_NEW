@@ -2,10 +2,6 @@ import tkinter
 from tkinter.filedialog import *
 from Screen_calc import *
 
-physical_time = 0
-
-time_step = None
-
 window_width = 800
 
 window_height = 800
@@ -17,6 +13,7 @@ def frap_method():
 # mode = 2
 def figure_method():
     print('2')
+
 # mode = 3
 def animation_method():
     main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 3, plate)
@@ -29,7 +26,6 @@ def main():
     global plate
 
     print('Modelling started!')
-    physical_time = 0
 
     root = tkinter.Tk()
 
