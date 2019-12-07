@@ -1,6 +1,6 @@
 import tkinter
 from tkinter.filedialog import *
-#from Screen_calc import *
+from Screen_calc import *
 
 physical_time = 0
 
@@ -10,16 +10,18 @@ window_width = 800
 
 window_height = 800
 
+# mode = 1
 def frap_method():
-    print('1')
+    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 1, plate)
+
+# mode = 2
 def figure_method():
     print('2')
+# mode = 3
 def animation_method():
-    print('3')
+    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 3, plate)
 
 def main():
-    global physical_time
-    global displayed_time
     global speed_of_sound
     global frequency
     global height

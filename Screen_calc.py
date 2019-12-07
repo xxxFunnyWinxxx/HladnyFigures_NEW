@@ -2,9 +2,11 @@ import scipy.sparse as sp
 import scipy.sparse.linalg as lg
 import numpy as np
 import tkinter as tk
+from PIL import Image, ImageDraw
+import PIL
 
 # Указание и вычисление констант
-def constant(speed_of_sound, height, width, frequency):
+def constant_init(speed_of_sound, height, width, frequency):
     global all_time, dt, freq
     global amplitude, len, hei, vec_lenght
     global x_center, y_center
@@ -53,13 +55,17 @@ def coords_vector_init():
     return Vector
 
 # Шаг процесса
-def main_calculation():
+def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
+    constant_init(speed_of_sound, height, width, frequency)
     time = 0
+    frames = []
+    image1 = PIL.Image.new("RGB", (2 * len, 2 * hei), (255, 255, 255))
+    draw = ImageDraw.Draw(image1)
     Matrix = factor_matrix_init()
     Vector = coords_vector_init()
     M = lg.aslinearoperator(Matrix)
     # Ход времени
-    for i in range(int(all_time/dt)):
+    for m in range(int(all_time/dt)):
         time += dt
 
         # Движение центральных плит
@@ -76,25 +82,33 @@ def main_calculation():
         for i in range(hei+2):
             Vector[vec_coords(i, 0)] = Vector[vec_coords(i, 1)]
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
-    return Vector
 
-def make_image(canv):
-    Vector = main_calculation()
+        if mode == 3 and m % 10 == 0:
+            for n in range(vec_lenght):
+                j = 2 * (n // (len + 2) + 1)
+                i = 2 * (n % (len + 2) + 1)
+                draw.rectangle([i, j, i + 1, j + 1], outline=color_calculation(float(Vector[n])))
+            frames.append(image1)
+    if mode == 1:
+        mode_1(canv, Vector)
+    if mode == 3:
+        frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:len(frames)], save_all=True, duration=50, Loop=0)
 
-    def rgb(rgb):
-        return "#%02x%02x%02x" % rgb
+def rgb(rgb):
+    return "#%02x%02x%02x" % rgb
 
-    def color_calculation(h):
-        if h >= 0:
-            color = (255, round(255 * float(np.exp(-h / amplitude))), round(255 * float(np.exp(-h / amplitude))))
-        else:
-            color = (round(255 * float(np.exp(h / amplitude))), round(255 * float(np.exp(h / amplitude))), 255)
-        return rgb(color)
+def color_calculation(h):
+    if h >= 0:
+        color = (255, round(255 * float(np.exp(-h / amplitude))), round(255 * float(np.exp(-h / amplitude))))
+    else:
+        color = (round(255 * float(np.exp(h / amplitude))), round(255 * float(np.exp(h / amplitude))), 255)
+    return rgb(color)
 
-    def create_board_image(canv, Vector, vec_lenght):
-        for n in range(vec_lenght):
-            i = 2*(n // (len+2) +1)
-            j = 2*(n % (len+2) +1)
-            canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
-    create_board_image(canv, Vector, vec_lenght)
+def mode_1(canv, Vector):
+    for n in range(vec_lenght):
+        i = 2*(n // (len+2) +1)
+        j = 2*(n % (len+2) +1)
+        canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n])))
+
+
 
