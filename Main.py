@@ -8,15 +8,24 @@ window_height = 800
 
 # mode = 1
 def frap_method():
-    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 1, plate)
+    plate.delete(ALL)
+    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    main_calculation(const, plate, 1)
+    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 1, plate)
 
 # mode = 2
 def figure_method():
-    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 2, plate)
+    plate.delete(ALL)
+    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    main_calculation(const, plate, 2)
+    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 2, plate)
 
 # mode = 3
 def animation_method():
-    main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 3, plate)
+    plate.delete(ALL)
+    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    main_calculation(const, plate, 3)
+    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 3, plate)
 
 def main():
     global speed_of_sound
