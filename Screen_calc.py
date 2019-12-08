@@ -84,7 +84,7 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
             Vector[vec_coords(i, 0)] = Vector[vec_coords(i, 1)]
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
 
-        if mode == 2:
+        if mode == 2 and time > (0.9*all_time):
             for i in range(vec_lenght):
                 print(Vector[i])
                 if abs(Vector[i]) <= 10 **(-15):
