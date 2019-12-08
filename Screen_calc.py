@@ -85,9 +85,10 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
             Vector[vec_coords(i, len+1)] = Vector[vec_coords(i, len)]
 
         if mode == 2:
-            for A in Imvec:
-                if A <= 10^-10:
-                    A += 1
+            for i in range(vec_lenght):
+                print(Vector[i])
+                if abs(Vector[i]) <= 10 **(-15):
+                    Imvec[i] += 1
 
         elif mode == 3 and m % 10 == 0:
             for n in range(vec_lenght):
@@ -99,7 +100,7 @@ def main_calculation(speed_of_sound, height, width, frequency, mode, canv):
         mode_1(canv, Vector)
     elif mode == 2:
         for n in range(vec_lenght):
-            if Imvec[n] > 10:
+            if Imvec[n] >= 1:
                 i = 2 * (n // (len + 2) + 1)
                 j = 2 * (n % (len + 2) + 1)
                 canv.create_rectangle(i, j, i + 1, j + 1, outline='BLACK')

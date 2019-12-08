@@ -25,7 +25,7 @@ def main():
     global width
     global plate
 
-    print('Modelling started!')
+    print('Программа запущена')
 
     root = tkinter.Tk()
 
@@ -75,7 +75,7 @@ def main():
     animation_method_button.pack()
 
     root.mainloop()
-    print('Modelling finished!')
+    print('Работа завершена')
 
 if __name__ == "__main__":
     main()
