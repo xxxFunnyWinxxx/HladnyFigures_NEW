@@ -1,6 +1,7 @@
 import tkinter
 from tkinter.filedialog import *
-from Screen_calc import *
+from Screen_calc import main_calculation
+from Classes import *
 
 window_width = 800
 
@@ -8,24 +9,20 @@ window_height = 800
 
 # mode = 1
 def frap_method():
-    plate.delete(ALL)
-    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
-    main_calculation(const, plate, 1)
-    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 1, plate)
+    start(1)
 
 # mode = 2
 def figure_method():
-    plate.delete(ALL)
-    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
-    main_calculation(const, plate, 2)
-    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 2, plate)
+    start(2)
 
 # mode = 3
 def animation_method():
+    start(3)
+
+def start(mode):
     plate.delete(ALL)
     const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
-    main_calculation(const, plate, 3)
-    #main_calculation(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()), 3, plate)
+    main_calculation(const, plate, mode)
 
 def main():
     global speed_of_sound

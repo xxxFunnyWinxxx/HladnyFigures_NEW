@@ -3,38 +3,8 @@ import scipy.sparse.linalg as lg
 import numpy as np
 from PIL import Image, ImageDraw
 import PIL
-from Classes import *
-
-# Указание и вычисление констант
-#def constant_init(speed_of_sound, height, width, frequency):
-#    global all_time, dt, freq
-#    global amplitude, len, hei, const.vec_lenght
-#    global x_center, y_center
-#    global A, B, C, D
-#
-#    all_time = 0.1    # Время процесса
-#    dt = 0.000001   # Шаг по времени
-#
-#    freq = frequency
-#
-#    quan = 100      # Число симулируемых плиток вдоль оси
-#
-#    amplitude = 0.005   # Амплитуда колебаний центральных плит
-#
-#    h = min(width, height)/quan
-#
-#    len = int(width/h)
-#    hei = int(height/h)
-#
-#    x_center = [int(quan/2),int(quan/2+1)]
-#    y_center = [int(quan/2),int(quan/2+1)]
-#
-#    const.vec_lenght = (len+2)*(hei+2)
-#    kappa = speed_of_sound * speed_of_sound
-#    A = 2-4*kappa*dt*dt/(h*h)
-#    B = kappa*dt*dt/(h*h)
-#    C = -1
-#    D = 1
+from glob import glob
+from os import path
 
 # Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
 def vec_coords(x,y,const):
@@ -54,7 +24,7 @@ def coords_vector_init(const):
     Vector = np.array(np.zeros(2*const.vec_lenght), dtype = float)
     return Vector
 
-# Шаг процесса
+# Процесс
 def main_calculation(const, canv, mode):
     time = 0
     if mode == 2:
@@ -65,6 +35,7 @@ def main_calculation(const, canv, mode):
     Matrix = factor_matrix_init(const)
     Vector = coords_vector_init(const)
     M = lg.aslinearoperator(Matrix)
+
     # Ход времени
     for m in range(int(const.all_time/const.dt)):
         time += const.dt
@@ -83,19 +54,17 @@ def main_calculation(const, canv, mode):
         for i in range(const.hei+2):
             Vector[vec_coords(i, 0,const)] = Vector[vec_coords(i, 1,const)]
             Vector[vec_coords(i,const. len+1,const)] = Vector[vec_coords(i, const.len,const)]
-        print(m)
         if mode == 2 and time > (0.9*const.all_time):
             for i in range(const.vec_lenght):
-                #print(Vector[i])
                 if abs(Vector[i]) <= 10 **(-5):
                     Imvec[i] += 1
 
-        elif mode == 3 and m % 10 == 0:
+        elif mode == 3 and m % 2 == 0:
             for n in range(const.vec_lenght):
                 j = 2 * (n // (const.len + 2) + 1)
                 i = 2 * (n % (const.len + 2) + 1)
-                draw.rectangle([i, j, i + 1, j + 1], outline=color_calculation(float(Vector[n])))
-            image1.save('plt/' + str(int(m / 100)) + '.png')
+                draw.rectangle([i, j, i + 1, j + 1], outline=color_calculation(float(Vector[n]), const))
+            image1.save('plt/' + '00000'[:-len(str(int(m)))] + str(int(m)) + '.png')
     if mode == 1:
         mode_1(canv, Vector, const)
     elif mode == 2:
@@ -119,21 +88,24 @@ def mode_1(canv, Vector, const):
         j = 2*(n // (const.len+2) +1)
         i = 2*(n % (const.len+2) +1)
         canv.create_rectangle(i, j, i + 1, j + 1, outline=color_calculation(float(Vector[n]),const))
+    print('Кадр готов')
 
 def mode_2(canv, Imvec, const):
     for n in range(const.vec_lenght):
-        if Imvec[n] > 80:
+        if Imvec[n] > 20:
             i = 2 * (n // (const.len + 2) + 1)
             j = 2 * (n % (const.len + 2) + 1)
             canv.create_rectangle(i, j, i + 1, j + 1, outline='BLACK')
+    print('Фигура хладни готова')
 
 def mode_3(const):
     def roll():
         frames = []
-        for i in range(int(const.all_time/(const.dt*10))):
-            new_frame = Image.open('plt/' + str(i) + '.png')
+        for i in glob('plt/*.png'):
+            new_frame = Image.open(i)
+            print(i)
             frames.append(new_frame)
         return frames
     frames = roll()
-    frames[0].save('png_to_gif.gif', format='GIF', append_images=frames[0:int(const.all_time/(const.dt*10))], save_all=True, duration=100, Loop=0)
+    frames[0].save('Animation.gif', format='GIF', append_images=frames, save_all=True, duration=10, Loop=0)
     print('Анимация готова')

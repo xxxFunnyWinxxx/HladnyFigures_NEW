@@ -1,7 +1,7 @@
 class constant:
     def __init__(self, speed_of_sound, height, width, frequency):
 
-        self.all_time = 0.1  # Время процесса
+        self.all_time = 0.01  # Время процесса
         self.dt = 0.000001  # Шаг по времени
 
         self.freq = frequency
