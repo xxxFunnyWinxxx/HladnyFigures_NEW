@@ -4,7 +4,6 @@ import numpy as np
 from PIL import Image, ImageDraw
 import PIL
 from glob import glob
-from os import path
 
 # Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
 def vec_coords(x,y,const):
@@ -70,7 +69,7 @@ def main_calculation(const, canv, mode):
     elif mode == 2:
         mode_2(canv, Imvec, const)
     elif mode == 3:
-        mode_3(const)
+        mode_3()
 
 
 def rgb(rgb):
@@ -92,13 +91,13 @@ def mode_1(canv, Vector, const):
 
 def mode_2(canv, Imvec, const):
     for n in range(const.vec_lenght):
-        if Imvec[n] > 20:
-            i = 2 * (n // (const.len + 2) + 1)
-            j = 2 * (n % (const.len + 2) + 1)
+        if Imvec[n] > 10:
+            j = 2 * (n // (const.len + 2) + 1)
+            i = 2 * (n % (const.len + 2) + 1)
             canv.create_rectangle(i, j, i + 1, j + 1, outline='BLACK')
     print('Фигура хладни готова')
 
-def mode_3(const):
+def mode_3():
     def roll():
         frames = []
         for i in glob('plt/*.png'):
@@ -107,5 +106,5 @@ def mode_3(const):
             frames.append(new_frame)
         return frames
     frames = roll()
-    frames[0].save('Animation.gif', format='GIF', append_images=frames, save_all=True, duration=10, Loop=0)
+    frames[0].save('Animation.gif', format='GIF', append_images=frames, save_all=True, duration=100, Loop=0)
     print('Анимация готова')

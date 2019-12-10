@@ -34,6 +34,7 @@ def main():
     print('Программа запущена')
 
     root = tkinter.Tk()
+    root.title('Симуляция')
 
     plate = tkinter.Canvas(root, width=window_width, height=window_height, bg="white")
     plate.pack(side=tkinter.LEFT)

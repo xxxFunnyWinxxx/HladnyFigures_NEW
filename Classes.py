@@ -1,12 +1,14 @@
 class constant:
     def __init__(self, speed_of_sound, height, width, frequency):
 
-        self.all_time = 0.01  # Время процесса
-        self.dt = 0.000001  # Шаг по времени
+        dt0 = 0.000001
+        speed0 = 800
+        self.dt = round(speed0*dt0/speed_of_sound, 8)  # Шаг по времени
+        self.all_time = 1000*self.dt  # Время процесса
 
         self.freq = frequency
 
-        quan = 100  # Число симулируемых плиток вдоль оси
+        quan = 120  # Число симулируемых плиток вдоль оси
 
         self.amplitude = 0.005  # Амплитуда колебаний центральных плит
 
