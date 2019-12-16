@@ -3,26 +3,36 @@ from tkinter.filedialog import *
 from Screen_calc import main_calculation
 from Classes import *
 
-window_width = 800
+window_width = 600
 
-window_height = 800
+window_height = 600
+
 
 # mode = 1
 def frap_method():
     start(1)
 
+
 # mode = 2
 def figure_method():
     start(2)
+
 
 # mode = 3
 def animation_method():
     start(3)
 
+
+# mode = 4
+def figure_search():
+    start(4)
+
+
 def start(mode):
     plate.delete(ALL)
-    const = constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    const = Constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
     main_calculation(const, plate, mode)
+
 
 def main():
     global speed_of_sound
@@ -42,7 +52,7 @@ def main():
     frame = tkinter.Frame(root)
     frame.pack(side=tkinter.RIGHT)
 
-    speed_of_sound_label = Label(text = 'Скорость звука, м/с')
+    speed_of_sound_label = Label(text='Скорость звука, м/с')
     speed_of_sound_label.pack()
 
     speed_of_sound = tkinter.DoubleVar()
@@ -80,9 +90,12 @@ def main():
     figure_method_button.pack()
     animation_method_button = tkinter.Button(text="Анимация", command=animation_method)
     animation_method_button.pack()
+    figure_search_button = tkinter.Button(text="Поиск фигур", command=figure_search)
+    figure_search_button.pack()
 
     root.mainloop()
     print('Работа завершена')
+
 
 if __name__ == "__main__":
     main()

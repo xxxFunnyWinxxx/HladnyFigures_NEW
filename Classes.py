@@ -1,10 +1,14 @@
-class constant:
+class Constant:
     def __init__(self, speed_of_sound, height, width, frequency):
+
+        iterations = 1000   # Число итераций
 
         dt0 = 0.000001
         speed0 = 800
         self.dt = round(speed0*dt0/speed_of_sound, 8)  # Шаг по времени
-        self.all_time = 1000*self.dt  # Время процесса
+        self.all_time = iterations*self.dt  # Время процесса
+
+        self.lim = 0.004*iterations
 
         self.freq = frequency
 
@@ -27,4 +31,10 @@ class constant:
         self.C = -1
         self.D = 1
 
+        self.n1 = 0
+        self.n2 = 0
+        self.learning_speed = 1
+        self.learning_rate = 0.05
+        self.alpha = 0.9
 
+        self.learning_step = 0
