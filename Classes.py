@@ -33,8 +33,8 @@ class Constant:
 
         self.n1 = 0
         self.n2 = 0
-        self.learning_speed = 1
-        self.learning_rate = 0.05
+        self.learning_speed = 0.1
+        self.learning_rate = 0.01
         self.alpha = 0.9
-
+        self.learning_steps_amount = 90
         self.learning_step = 0

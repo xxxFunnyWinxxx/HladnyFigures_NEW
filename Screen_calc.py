@@ -43,7 +43,6 @@ def main_calculation(const, canv, mode):
     # Ход времени
     for m in range(int(const.all_time/const.dt)):
         time += const.dt
-        # print(m)
         # ДЕЙСТВИЯ НАД СИСТЕМОЙ
         # Движение центральных плит
         for i in const.x_center:
@@ -93,7 +92,7 @@ def main_calculation(const, canv, mode):
         const.n2 = grad_count(imvec, const)
         grad_step(const.n1, const.n2, const.freq, const)
         const.n1 = const.n2
-        if const.learning_step < 100:
+        if const.learning_step < const.learning_steps_amount:
             main_calculation(const, canv, mode)
         else:
             print('Фигура найдена')
@@ -101,7 +100,8 @@ def main_calculation(const, canv, mode):
 
 
 # ФУНКЦИИ
-# Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
+# Пересчёт координат из матрицы в вектор
+# (идёт построчно слева направо)
 def vec_coords(x, y, const):
     n_in_vector = x * (const.len+2) + y
     return n_in_vector
@@ -130,7 +130,6 @@ def roll():
     frames = []
     for i in glob('plt/*.png'):
         new_frame = Image.open(i)
-        print(i)
         frames.append(new_frame)
     return frames
 
