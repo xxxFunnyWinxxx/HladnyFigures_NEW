@@ -155,4 +155,4 @@ def show_figure(canv, const, imvec):
     for n in range(const.vec_lenght):
         j = 2 * (n // (const.len + 2) + 1)
         i = 2 * (n % (const.len + 2) + 1)
-        canv.create_rectangle(i, j, i + 1, j + 1, outline=grey_calculation(imvec[n], const)).
+        canv.create_rectangle(i, j, i + 1, j + 1, outline=grey_calculation(imvec[n], const))
