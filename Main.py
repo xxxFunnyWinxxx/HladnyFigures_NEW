@@ -11,28 +11,33 @@ window_height = 600
 # mode = 1
 def frap_method():
     start(1)
+    progress_bar['text'] = 'Кадр готов'
 
 
 # mode = 2
 def figure_method():
     start(2)
+    progress_bar['text'] = 'Фигура готова'
 
 
 # mode = 3
 def animation_method():
     start(3)
+    progress_bar['text'] = 'Анимация готова'
 
 
 # mode = 4
 def figure_search():
+    progress_bar['text'] = 'Процесс поиска...'
     freq = start(4)
     freq = round(freq, 1)
-    frequency_search_label['text'] = str(freq) + 'Гц'
+    progress_bar['text'] = str(freq) + ' Гц'
 
 
 # mode = 5
 def energy_graph():
     start(5)
+    progress_bar['text'] = 'График готов'
 
 
 def start(mode):
@@ -50,7 +55,7 @@ def main():
     global height
     global width
     global plate
-    global frequency_search_label
+    global progress_bar
 
     print('Программа запущена')
 
@@ -103,10 +108,12 @@ def main():
     animation_method_button.pack()
     figure_search_button = tkinter.Button(text="Поиск фигур", command=figure_search)
     figure_search_button.pack()
-    frequency_search_label = Label(text=' ')
-    frequency_search_label.pack()
     energy_graph_button = tkinter.Button(text="График энергии", command=energy_graph)
     energy_graph_button.pack()
+
+    progress_bar = Label(root, relief = SUNKEN, anchor = W, text = 'Программа запущена')
+    progress_bar.pack(side = tkinter.BOTTOM)
+
 
     root.mainloop()
     print('Работа завершена')
