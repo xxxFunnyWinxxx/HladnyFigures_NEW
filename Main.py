@@ -25,7 +25,9 @@ def animation_method():
 
 # mode = 4
 def figure_search():
-    start(4)
+    freq = start(4)
+    freq = round(freq, 1)
+    frequency_search_label['text'] = str(freq)
 
 
 # mode = 5
@@ -37,6 +39,7 @@ def start(mode):
     plate.delete(ALL)
     const = Constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
     main_calculation(const, plate, mode)
+    return const.freq
 
 
 def main():
@@ -45,6 +48,7 @@ def main():
     global height
     global width
     global plate
+    global frequency_search_label
 
     print('Программа запущена')
 
@@ -97,6 +101,8 @@ def main():
     animation_method_button.pack()
     figure_search_button = tkinter.Button(text="Поиск фигур", command=figure_search)
     figure_search_button.pack()
+    frequency_search_label = Label(text=' ')
+    frequency_search_label.pack()
     energy_graph_button = tkinter.Button(text="График энергии", command=energy_graph)
     energy_graph_button.pack()
 

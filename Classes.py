@@ -3,8 +3,6 @@ class Constant:
 
         iterations = 1000   # Число итераций
 
-        self.time = 0
-
         dt0 = 0.000001
         speed0 = 800
         self.dt = round(speed0*dt0/speed_of_sound, 8)  # Шаг по времени
@@ -38,5 +36,5 @@ class Constant:
         self.learning_speed = 0.1
         self.learning_rate = 0.01
         self.alpha = 0.9
-        self.learning_steps_amount = 90
+        self.learning_steps_amount = 40
         self.learning_step = 0

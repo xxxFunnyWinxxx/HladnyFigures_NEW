@@ -29,6 +29,7 @@ def coords_vector_init(const):
 
 # ПРОЦЕСС
 def main_calculation(const, canv, mode):
+    time = 0
     # РЕЖИМЫ ВХОД
     # для анимации
     image1 = PIL.Image.new("RGB", (2 * const.len, 2 * const.hei), (255, 255, 255))
@@ -45,13 +46,13 @@ def main_calculation(const, canv, mode):
 
     # Ход времени
     for m in range(int(const.all_time/const.dt)):
-        const.time += const.dt
+        time += const.dt
         # print(m)
         # ДЕЙСТВИЯ НАД СИСТЕМОЙ
         # Движение центральных плит
         for i in const.x_center:
             for j in const.y_center:
-                vector[vec_coords(i, j, const)] = const.amplitude*np.sin(2 * np.pi * const.freq * const.time)
+                vector[vec_coords(i, j, const)] = const.amplitude*np.sin(2 * np.pi * const.freq * time)
 
         # Итерация системы
         vector = operator.matvec(vector)
@@ -66,7 +67,7 @@ def main_calculation(const, canv, mode):
             vector[vec_coords(i, const. len + 1, const)] = vector[vec_coords(i, const.len, const)]
 
         # РЕЖИМЫ ЦЕНТР
-        if (mode == 2 or mode == 4) and const.time > (0.9*const.all_time):
+        if (mode == 2 or mode == 4) and time > (0.9*const.all_time):
             for i in range(const.vec_lenght):
                 if abs(vector[i]) <= 10 ** (-5):
                     imvec[i] += 1
@@ -84,7 +85,7 @@ def main_calculation(const, canv, mode):
             vec_energy = vec_energy*vec_energy
             energy = np.sum(vec_energy)
             energy_mass.append(energy)
-            time_mass.append(const.time*10**3)
+            time_mass.append(time*10**3)
     # РЕЖИМЫ ВЫХОД
     if mode == 1:
         for n in range(const.vec_lenght):
@@ -109,6 +110,7 @@ def main_calculation(const, canv, mode):
         else:
             print('Фигура найдена')
             show_figure(canv, const, imvec)
+            return const.freq
     elif mode == 5:
         energy_mass = energy_mass / max(energy_mass)
         plt.plot(time_mass, energy_mass)
@@ -117,6 +119,7 @@ def main_calculation(const, canv, mode):
         plt.ylabel("Кинетическая энергия")
         print('График построен')
         plt.show()
+
 
 # ФУНКЦИИ
 # Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
@@ -162,7 +165,7 @@ def grad_count(imvec, const):
 
 def grad_step(n1, n2, freq, const):
     new_freq = freq + const.learning_speed
-    const.learning_speed = const.alpha * const.learning_speed - const.learning_rate * (n1 - n2)  # /(new_freq - freq)
+    const.learning_speed = const.alpha * const.learning_speed - const.learning_rate * (n1 - n2)
     const.learning_step += 1
     const.freq = new_freq
     return new_freq
