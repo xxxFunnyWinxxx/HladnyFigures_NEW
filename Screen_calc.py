@@ -47,7 +47,6 @@ def main_calculation(const, canv, mode):
     # Ход времени
     for m in range(int(const.all_time/const.dt)):
         time += const.dt
-        # print(m)
         # ДЕЙСТВИЯ НАД СИСТЕМОЙ
         # Движение центральных плит
         for i in const.x_center:
@@ -104,7 +103,6 @@ def main_calculation(const, canv, mode):
         const.n2 = grad_count(imvec, const)
         grad_step(const.n1, const.n2, const.freq, const)
         const.n1 = const.n2
-        print(const.freq)
         if const.learning_step < const.learning_steps_amount:
             main_calculation(const, canv, mode)
         else:
