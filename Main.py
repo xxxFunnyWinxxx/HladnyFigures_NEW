@@ -28,9 +28,15 @@ def figure_search():
     start(4)
 
 
+# mode = 5
+def energy_graph():
+    start(5)
+
+
 def start(mode):
     plate.delete(ALL)
     const = Constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    root.geometry(str(2*const.len)+'x'+str(2*const.hei))
     main_calculation(const, plate, mode)
 
 
@@ -40,6 +46,7 @@ def main():
     global height
     global width
     global plate
+    global root
 
     print('Программа запущена')
 
@@ -92,6 +99,8 @@ def main():
     animation_method_button.pack()
     figure_search_button = tkinter.Button(text="Поиск фигур", command=figure_search)
     figure_search_button.pack()
+    energy_graph_button = tkinter.Button(text="График энергии", command=energy_graph)
+    energy_graph_button.pack()
 
     root.mainloop()
     print('Работа завершена')

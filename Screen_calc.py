@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 import PIL
 from glob import glob
+import matplotlib.pyplot as plt
 
 
 # ИНИЦИАЛИАЦИЯ
@@ -35,6 +36,9 @@ def main_calculation(const, canv, mode):
     draw = ImageDraw.Draw(image1)
     # для фигур
     imvec = np.array(np.zeros(const.vec_lenght), dtype=float)
+    # для графиков
+    energy_mass = []
+    time_mass = []
     # общее
     matrix = factor_matrix_init(const)
     vector = coords_vector_init(const)
@@ -43,6 +47,7 @@ def main_calculation(const, canv, mode):
     # Ход времени
     for m in range(int(const.all_time/const.dt)):
         time += const.dt
+        # print(m)
         # ДЕЙСТВИЯ НАД СИСТЕМОЙ
         # Движение центральных плит
         for i in const.x_center:
@@ -72,8 +77,15 @@ def main_calculation(const, canv, mode):
                 j = 2 * (n // (const.len + 2) + 1)
                 i = 2 * (n % (const.len + 2) + 1)
                 draw.rectangle([i, j, i + 1, j + 1], outline=color_calculation(float(vector[n]), const))
-            image1.save('plt/' + '00000'[:-len(str(int(m)))] + str(int(m)) + '.png')
-
+            image1.save('Fraps/' + '00000'[:-len(str(int(m)))] + str(int(m)) + '.png')
+        elif mode == 5:
+            cut1 = vector[0:const.vec_lenght]
+            cut2 = vector[const.vec_lenght: 2*const.vec_lenght + 1]
+            vec_energy = cut1 - cut2
+            vec_energy = vec_energy*vec_energy
+            energy = np.sum(vec_energy)
+            energy_mass.append(energy)
+            time_mass.append(time)
     # РЕЖИМЫ ВЫХОД
     if mode == 1:
         for n in range(const.vec_lenght):
@@ -92,16 +104,23 @@ def main_calculation(const, canv, mode):
         const.n2 = grad_count(imvec, const)
         grad_step(const.n1, const.n2, const.freq, const)
         const.n1 = const.n2
+        print(const.freq)
         if const.learning_step < const.learning_steps_amount:
             main_calculation(const, canv, mode)
         else:
             print('Фигура найдена')
             show_figure(canv, const, imvec)
-
+    elif mode == 5:
+        time_mass = time_mass
+        energy_mass = energy_mass / max(energy_mass)
+        plt.plot(time_mass, energy_mass)
+        plt.title("Зависимость кинетической энергии системы от времени")
+        plt.xlabel("Время, мc")
+        plt.ylabel("Кинетическая энергия")
+        plt.show()
 
 # ФУНКЦИИ
-# Пересчёт координат из матрицы в вектор
-# (идёт построчно слева направо)
+# Пересчёт координат из матрицы в вектор (идёт построчно слева направо)
 def vec_coords(x, y, const):
     n_in_vector = x * (const.len+2) + y
     return n_in_vector
@@ -113,10 +132,10 @@ def rgb(colors_kort):
 
 def color_calculation(h, const):
     if h >= 0:
-        color = (255, round(255 * float(np.exp(-h / const.amplitude))),
+        color = (255, round(255 * float(np.exp(-h / const.amplitude))), 
                  round(255 * float(np.exp(-h / const.amplitude))))
     else:
-        color = (round(255 * float(np.exp(h / const.amplitude))),
+        color = (round(255 * float(np.exp(h / const.amplitude))), 
                  round(255 * float(np.exp(h / const.amplitude))), 255)
     return rgb(color)
 
@@ -128,7 +147,7 @@ def grey_calculation(n, const):
 
 def roll():
     frames = []
-    for i in glob('plt/*.png'):
+    for i in glob('Fraps/*.png'):
         new_frame = Image.open(i)
         frames.append(new_frame)
     return frames
