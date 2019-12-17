@@ -3,6 +3,8 @@ class Constant:
 
         iterations = 1000   # Число итераций
 
+        self.time = 0
+
         dt0 = 0.000001
         speed0 = 800
         self.dt = round(speed0*dt0/speed_of_sound, 8)  # Шаг по времени

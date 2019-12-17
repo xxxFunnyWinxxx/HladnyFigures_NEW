@@ -36,7 +36,6 @@ def energy_graph():
 def start(mode):
     plate.delete(ALL)
     const = Constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
-    root.geometry(str(2*const.len)+'x'+str(2*const.hei))
     main_calculation(const, plate, mode)
 
 
@@ -46,7 +45,6 @@ def main():
     global height
     global width
     global plate
-    global root
 
     print('Программа запущена')
 
