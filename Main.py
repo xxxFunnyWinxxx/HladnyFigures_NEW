@@ -27,7 +27,7 @@ def animation_method():
 def figure_search():
     freq = start(4)
     freq = round(freq, 1)
-    frequency_search_label['text'] = str(freq)
+    frequency_search_label['text'] = str(freq) + 'Гц'
 
 
 # mode = 5
@@ -38,6 +38,8 @@ def energy_graph():
 def start(mode):
     plate.delete(ALL)
     const = Constant(speed_of_sound.get(), height.get(), width.get(), float(frequency.get()))
+    plate['width'] = 2 * const.len
+    plate['height'] = 2 * const.hei
     main_calculation(const, plate, mode)
     return const.freq
 
